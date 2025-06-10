@@ -47,18 +47,18 @@ async function main() {
   if (isCancel(chainSelection)) return cancel("Aborted.");
 
   const s = spinner();
-  s.start("Scaffolding project...");
-  execSync(`forge init ${projectName}`, { stdio: "ignore" });
+  s.start(`Scaffolding "${projectName}"`);
+  execSync(`forge init ${projectName} --no-commit`, { stdio: "ignore" });
 
   if (dependencies === "oz-core" || dependencies === "both") {
     execSync(
-      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts`,
+      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts --no-commit`,
       { stdio: "ignore" }
     );
   }
   if (dependencies === "oz-upgradeable" || dependencies === "both") {
     execSync(
-      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts-upgradeable`,
+      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts-upgradeable --no-commit`,
       { stdio: "ignore" }
     );
   }
@@ -102,7 +102,7 @@ async function main() {
   writeFileSync(path.join(projectName, "foundry.toml"), toml.join("\n"));
 
   s.stop(`🔥 Project ${projectName} created!`);
-  outro("Happy coding 🧑🏻‍💻");
+  outro("Happy coding 🧑🏻");
 }
 
 main().catch((err) => {
