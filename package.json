@@ -1,5 +1,5 @@
 {
-  "name": "forge-init",
+  "name": "create-foundry-app",
   "module": "src/index.ts",
   "devDependencies": {
     "@clack/prompts": "^0.11.0",
