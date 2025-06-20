@@ -48,17 +48,17 @@ async function main() {
 
   const s = spinner();
   s.start(`Scaffolding "${projectName}"`);
-  execSync(`forge init ${projectName} --no-commit`, { stdio: "ignore" });
+  execSync(`forge init ${projectName}`, { stdio: "ignore" });
 
   if (dependencies === "oz-core" || dependencies === "both") {
     execSync(
-      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts --no-commit`,
+      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts`,
       { stdio: "ignore" }
     );
   }
   if (dependencies === "oz-upgradeable" || dependencies === "both") {
     execSync(
-      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts-upgradeable --no-commit`,
+      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts-upgradeable`,
       { stdio: "ignore" }
     );
   }
