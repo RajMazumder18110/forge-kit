@@ -19,6 +19,12 @@ export const SUPPORTED_CHAINS: Chain[] = [
     chainId: 56,
   },
   {
+    id: "manta",
+    name: "Manta",
+    rpc: "https://pacific-rpc.manta.network/http",
+    chainId: 169,
+  },
+  {
     id: "sepolia",
     name: "Sepolia (Testnet)",
     rpc: "https://sepolia.drpc.org",
