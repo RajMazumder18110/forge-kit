@@ -90,12 +90,12 @@ async function main() {
   /// Library
   if (dependencies === "oz-core" || dependencies === "both") {
     toml.push(
-      `\t "@openzeppelin/contracts/=packages/openzeppelin-contracts/contracts/",`
+      `\t "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",`
     );
   }
   if (dependencies === "oz-upgradeable" || dependencies === "both") {
     toml.push(
-      `\t "@openzeppelin/contracts-upgradeable/=packages/openzeppelin-contracts-upgradeable/contracts/",`
+      `\t "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",`
     );
   }
   toml.push(`]`);
