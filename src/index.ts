@@ -63,7 +63,7 @@ async function main() {
     );
   }
 
-  // Generate foundry.toml
+  /// Generate foundry.toml
   const toml = [];
   toml.push("[profile.default]");
   toml.push(`src = "src"`);
@@ -79,6 +79,26 @@ async function main() {
   toml.push(`optimizer = true`);
   toml.push(`optimizer_runs = 200`);
   toml.push(`solc_version = "0.8.27"`);
+
+  /// Remappings
+  toml.push("\n# Remappings");
+  toml.push(`remappings = [`);
+  /// Local files
+  toml.push(`\t "@/=src/",`);
+  toml.push(`\t "@scripts/=script/",`);
+
+  /// Library
+  if (dependencies === "oz-core" || dependencies === "both") {
+    toml.push(
+      `\t "@openzeppelin/contracts/=packages/openzeppelin-contracts/contracts/",`
+    );
+  }
+  if (dependencies === "oz-upgradeable" || dependencies === "both") {
+    toml.push(
+      `\t "@openzeppelin/contracts-upgradeable/=packages/openzeppelin-contracts-upgradeable/contracts/",`
+    );
+  }
+  toml.push(`]`);
 
   if (chainSelection.length) {
     /// RPC endpoints
