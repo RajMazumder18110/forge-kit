@@ -48,26 +48,13 @@ async function main() {
 
   const s = spinner();
   s.start(`Scaffolding "${projectName}"`);
-  execSync(`forge init ${projectName}`, { stdio: "ignore" });
-
-  if (dependencies === "oz-core" || dependencies === "both") {
-    execSync(
-      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts`,
-      { stdio: "ignore" }
-    );
-  }
-  if (dependencies === "oz-upgradeable" || dependencies === "both") {
-    execSync(
-      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts-upgradeable`,
-      { stdio: "ignore" }
-    );
-  }
+  execSync(`forge init ${projectName} --no-git --offline`, { stdio: "ignore" });
 
   /// Generate foundry.toml
   const toml = [];
   toml.push("[profile.default]");
   toml.push(`src = "src"`);
-  toml.push(`libs = ["lib"]`);
+  toml.push(`libs = ["packages"]`);
 
   /// Build config
   toml.push("\n# Builds");
@@ -87,15 +74,15 @@ async function main() {
   toml.push(`\t "@/=src/",`);
   toml.push(`\t "@scripts/=script/",`);
 
-  /// Library
+  /// Libraries
   if (dependencies === "oz-core" || dependencies === "both") {
     toml.push(
-      `\t "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",`
+      `\t "@openzeppelin/contracts/=packages/openzeppelin-contracts/contracts/",`
     );
   }
   if (dependencies === "oz-upgradeable" || dependencies === "both") {
     toml.push(
-      `\t "@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/",`
+      `\t "@openzeppelin/contracts-upgradeable/=packages/openzeppelin-contracts-upgradeable/contracts/",`
     );
   }
   toml.push(`]`);
@@ -120,6 +107,24 @@ async function main() {
 
   /// Updating the TOML file.
   writeFileSync(path.join(projectName, "foundry.toml"), toml.join("\n"));
+
+  /// Installing dependencies
+  execSync(`cd ${projectName} && forge install foundry-rs/forge-std`, {
+    stdio: "ignore",
+  });
+
+  if (dependencies === "oz-core" || dependencies === "both") {
+    execSync(
+      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts`,
+      { stdio: "ignore" }
+    );
+  }
+  if (dependencies === "oz-upgradeable" || dependencies === "both") {
+    execSync(
+      `cd ${projectName} && forge install OpenZeppelin/openzeppelin-contracts-upgradeable`,
+      { stdio: "ignore" }
+    );
+  }
 
   s.stop(`🔥 Project ${projectName} created!`);
   outro("Happy coding 🧑🏻");
